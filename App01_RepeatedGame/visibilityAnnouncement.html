@@ -1,0 +1,44 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block scripts %}
+
+
+<script>
+    var tempElem = document.getElementById('id_info');
+</script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+
+{% endblock %}
+
+
+{% block title %}
+    Matches {{ FirstMatch }} - {{ LastMatch }}
+{% endblock %}
+
+{% block content %}
+
+    <br>
+
+    <p align="justify">
+
+        During today's experiment,  the <strong style="color: red">Number of New Tasks</strong> will be randomly drawn <strong style="color: red; text-underline: red">{{ Drawn }}</strong> you and the participant with whom you are matched make decisions.
+
+    </p>
+
+    <p align="justify">
+
+        This means that in each round, you and the participant with whom you are matched make decisions <strong style="color: red" id="id_info">while knowing the Number of New Tasks</strong> for that round.
+
+    </p>
+            <p style="text-align: center"><br/>
+                <button class="otree-btn-next btn btn-primary" id="NextButton" style="display:inline-block;">Begin Match {{ FirstMatch }}</button>
+            </p>
+
+
+{% endblock %}

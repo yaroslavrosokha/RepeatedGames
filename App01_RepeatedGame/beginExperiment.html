@@ -1,0 +1,39 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block scripts %}
+
+{% endblock %}
+
+
+{% block app_styles %}
+
+{% endblock %}
+
+{% block title %}
+    Reminders
+{% endblock %}
+
+{% block content %}
+
+    <p>
+
+        <ol style="text-align: left">
+            <li>The experiment is made up of {{ Matches }} matches. </li><br/>
+            <li>At the start of each match you will be randomly paired with another participant.</li><br/>
+            <li>In each round of a match you will select either 1 or 2. The other participant will also select either 1 or 2.</li><br/>
+            <li>The match will last a random number of rounds.</li><br/>
+            <li>When the match ends, you will again be randomly paired with another participant for the next match.</li><br/>
+            <li>At the end of the experiment, your total points will be converted into
+              cash at the exchange rate of {{ PointsPerDollar }} points = $1. In addition, you will be paid your show-up
+            fee of ${{ ShowUpFee }}.</li><br/>
+        </ol>
+
+    </p>
+            <p style="text-align: center"><br/>
+                <button class="otree-btn-next btn btn-primary" id="NextButton" style="display:inline-block;">Begin Experiment</button>
+            </p>
+
+
+{% endblock %}

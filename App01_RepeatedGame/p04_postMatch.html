@@ -1,0 +1,40 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Match # {{ matchNumber }}
+{% endblock %}
+
+{% block content %}
+
+    {% include 'App01_RepeatedGame/commonHTML_PayoffTables.html' %}
+    <br>
+    {% include 'App01_RepeatedGame/commonHTML_History.html' %}
+    <br>
+    <div class="column" style="background-color:#ffffff;text-align: center;">
+        <p style="font-size: 18px;color: gray;z-index: 6; position: relative;">Match #{{ player.matchNumber }} has ended.</p>
+        <button class="otree-btn-next btn btn-primary" id="NextButton" style="display:inline-block;">Continue</button>
+    </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+    {% include 'App01_RepeatedGame/commonJS.html' %}
+
+
+    <script>
+
+        MyVariables = {'period':0};
+        ShowHistory(offset=1);
+
+    </script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+
+    {% include 'App01_RepeatedGame/commonCSS.html' %}
+
+{% endblock %}

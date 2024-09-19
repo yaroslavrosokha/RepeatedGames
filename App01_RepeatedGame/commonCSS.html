@@ -1,0 +1,409 @@
+<style type="text/css">
+
+    :root {
+        --C-color: #f9ff87;
+        --D-color: #8ec9ff;
+        --R-color: rgba(255,0,0,0.30);
+        --G-color: rgba(0,130,0,0.30);
+        --B-color: rgba(0,0,130,0.30);
+        --N-color: rgba(155, 155, 155, 0.30);
+        --cell-width: 50px;
+        --cell-height: 35px;
+        --line-height-small: 30px;
+        --line-height-regular: 45px;
+        --label-width: 250px;
+        --line1-top: 10px;
+        --line2-top: 60px;
+        --line3-top: 110px;
+        --line4-top: 160px;
+        --line5-top: 210px;
+        --line6-top: 245px;
+        --line7-top: 280px;
+        --inner-container-height: 315px;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .column {
+        flex: 25%;
+        padding: 20px 50px 0px 50px;
+    }
+
+
+
+    .payoffTablesColumn {
+        flex: 33.3%;
+        padding: 25px 0px 25px 0px;
+        text-align: center;
+
+    }
+
+
+
+    .otree-timer {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        font-size: 24px;
+        padding-top: 25px;
+        color: white;
+        background-color: white;
+        border-color: white;
+    }
+
+    ._otree-content {
+        padding: 0px 50px 0px 50px;
+<!--        text-align: center;-->
+        {#border: solid cyan;#}
+    }
+
+    .otree-body {
+
+        font-family: Proxima Nova;
+        font-size: 18px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .otree-title {
+        background: #e6e6e6;
+        font-family: Proxima Nova;
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        width:100%
+        padding: 5px;
+    }
+
+    .otree-title.page-header {
+        font-family: Proxima Nova;
+        text-align: center;
+        padding: 5px;
+        {#border: dashed deepskyblue;#}
+    }
+
+    .progress{
+        position: relative;
+        bottom: 0;
+    }
+
+
+    .otree-wait-page {
+
+        font-family: Proxima Nova;
+        font-size: 18px;
+        position: absolute;
+        width:100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        top: 0px;
+        background: white;
+
+    }
+
+    .otree-wait-page.container {
+        padding: 0px;
+        top: 0px;
+
+    }
+
+    .otree-body.container {
+        padding: 0px;
+        top: 0px;
+    }
+
+    .otree-wait-page__title {
+        background: #e6e6e6;
+        font-family: Proxima Nova;
+        text-align: center;
+        top: 0px;
+
+    }
+
+    .otree-wait-page__title.card-header {
+        background: #e6e6e6;
+        font-family: Proxima Nova;
+        text-align: center;
+        margin: 5px;
+        width:100%
+        padding: 5px;
+        font-size: 32px;
+    }
+
+    .card {
+        border-radius: 0px;
+        box-shadow: none;
+        padding: 0px;
+        top: 0px;
+        position: relative;
+        border: none;
+        margin: 0px;
+        padding: 0px;
+        border: none;
+    }
+
+    .card-body {
+        font-family: Proxima Nova;
+        font-size: 18px;
+        position: relative;
+        top: 0px;
+        margin: 0px;
+        padding: 0px;
+
+    }
+
+    .card-header {
+        font-family: Proxima Nova;
+        font-size: 18px;
+        border: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .card.bg-light.instructions {
+        padding: 0;
+        border: none;
+    }
+
+    .outerbox {
+        width: 100%; /* or whatever width you want. */
+        height: var(--inner-container-height);
+        max-width: 100%; /* or whatever width you want. */
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        {#border: thin solid gray;#}
+    }
+
+    .innerbox {
+        width: 1250px; /* or whatever width you want. */
+        height: var(--inner-container-height);
+        max-width: 1250px; /* or whatever width you want. */
+        position: absolute;
+        background: white;
+        top: 0px;
+        left: var(--label-width);
+        overflow-x: hidden;
+        overflow-y: hidden;
+        {#border: solid pink;#}
+    }
+
+    .payoffbox {
+        width: 350px; /* or whatever width you want. */
+        height: 200px;
+        max-width: 350px; /* or whatever width you want. */
+        position: relative;
+        background: white;
+        top: 0px;
+        left: 0px;
+        display: inline-block;
+    }
+
+    .payoffDetail {
+        left: var(--label-width);
+        width: var(--cell-width);
+        height: var(--cell-width);
+        background: white;
+        border-style: solid;
+        border-width: thin;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-regular);
+        padding-bottom: 5px;
+    }
+
+
+    .periodLabel {
+        top: var(--line1-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-height);
+        background: white;
+        border-style: none;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+        z-index: 2;
+    }
+
+    .period {
+        top: var(--line1-top);
+        width: var(--cell-width);
+        height: var(--cell-height);
+        background: white;
+        border-style: none;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+    }
+
+
+    .myChoiceLabel {
+        top: var(--line2-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-width);
+        background: white;
+        border-style: solid;
+        position: absolute;
+        border-width: thin;
+        text-align: center;
+        line-height: var(--line-height-regular);
+        padding-bottom: 5px;
+        z-index: 2;
+    }
+
+    .myChoice {
+        left: 0px;
+        top: var(--line2-top);
+        width: var(--cell-width);
+        height: var(--cell-width);
+        background: white;
+        border-style: solid;
+        border-width: thin;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-regular);
+        padding-bottom: 5px;
+    }
+
+    .otherChoiceLabel {
+        top: var(--line3-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-width);
+        background: white;
+        position: absolute;
+        border-style: solid;
+        border-width: thin;
+        text-align: center;
+        line-height: var(--line-height-regular);
+        padding-bottom: 5px;
+        z-index: 2;
+    }
+
+    .otherChoice {
+        left: 0px;
+        top: var(--line3-top);
+        width: var(--cell-width);
+        height: var(--cell-width);
+        background: white;
+        border-style: solid;
+        border-width: thin;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-regular);
+        padding-bottom: 5px;
+    }
+
+    .myPayoffLabel {
+        top: var(--line4-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-height);
+        position: absolute;
+        background: white;
+        border-style: none;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+        z-index: 2;
+    }
+
+    .myPayoff {
+        left: 0px;
+        top: var(--line4-top);
+        width: var(--cell-width);
+        height: var(--cell-height);
+        background: white;
+        border-style: none;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+    }
+
+    .otherPayoffLabel {
+        top: var(--line5-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-height);
+        position: absolute;
+        background: white;
+        border-style: none;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+        z-index: 2;
+    }
+
+    .otherPayoff {
+        left: 0px;
+        top: var(--line5-top);
+        width: var(--cell-width);
+        height: var(--cell-height);
+        position: absolute;
+        background: white;
+        border-style: none;
+        position: absolute;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+    }
+
+    .diceRollLabel {
+        top: var(--line6-top);
+        left: 0px;
+        width: var(--label-width);
+        height: var(--cell-height);
+        position: absolute;
+        background: white;
+        border-style: none;
+        opacity: .5;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+        z-index: 2;
+        font-size: 12px;
+    }
+
+    .diceRoll {
+        top: var(--line6-top);
+        width: 15px;
+        background: white;
+        border-style: none;
+        position: absolute;
+        opacity: .5;
+        text-align: center;
+        line-height: var(--line-height-small);
+        padding-bottom: 5px;
+        font-size: 12px;
+        padding-left: 5px;
+    }
+
+    .scrollLabel {
+        top: var(--line7-top);
+        left: 0px;
+        width: var(--label-width);
+        position: absolute;
+        height: 20px;
+        background: white;
+        border-style: none;
+        opacity: .5;
+        text-align: center;
+        line-height: var(--line-height-small);
+        z-index: 2;
+        font-size: 12px;
+        vertical-align: middle;
+        display: none;
+    }
+
+</style>

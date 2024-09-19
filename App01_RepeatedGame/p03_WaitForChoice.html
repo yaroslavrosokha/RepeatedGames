@@ -1,0 +1,42 @@
+{% extends 'otree/WaitPage.html' %}
+{% load otree %}
+
+
+{% block title %}
+
+    Match #{{ player.matchNumber }}
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="_otree-content">
+        {% include 'App01_RepeatedGame/commonHTML_PayoffTables.html' %}
+        <br>
+        {% include 'App01_RepeatedGame/commonHTML_History.html' %}
+        <br>
+        <div class="column" style="background-color:#ffffff;text-align: center;">
+            <p style="font-size: 18px;color: gray;z-index: 6; position: relative;">Please wait while the other participant makes a choice.</p>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block app_scripts %}
+    {% include 'App01_RepeatedGame/commonJS.html' %}
+
+    <script>
+        MyVariables = {'period': 0};
+        ShowHistory();
+        ShowCurrentPeriod();
+    </script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+
+    {% include 'App01_RepeatedGame/commonCSS.html' %}
+
+{% endblock %}

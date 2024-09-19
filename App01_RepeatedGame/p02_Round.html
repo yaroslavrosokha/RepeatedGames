@@ -1,0 +1,44 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block title %}
+
+    Match #{{ player.matchNumber }}
+
+{% endblock %}
+
+
+
+{% block content %}
+
+        {% include 'App01_RepeatedGame/commonHTML_PayoffTables.html' %}
+        <br>
+        {% include 'App01_RepeatedGame/commonHTML_History.html' %}
+        <br>
+        {% include 'App01_RepeatedGame/commonHTML_Decision.html' %}
+
+{% endblock %}
+
+
+
+{% block scripts %}
+    {% include 'App01_RepeatedGame/commonJS.html' %}
+
+
+    <script>
+
+        MyVariables = {'period':0};
+        ShowHistory();
+        ShowCurrentPeriodEmpty();
+        updateText('myChoiceRound',MyVariables.period+1);
+
+    </script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+    {% include 'App01_RepeatedGame/commonCSS.html' %}
+
+{% endblock %}

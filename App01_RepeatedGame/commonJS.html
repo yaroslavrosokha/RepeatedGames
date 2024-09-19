@@ -1,0 +1,295 @@
+{% load otree_tags %}
+
+<script>
+
+    document.addEventListener('keydown', function (event) {
+        if ((event.code == 'KeyR' || event.code == 'KeyF' || event.code == 'KeyS') && (event.ctrlKey || event.metaKey)) {
+            event.preventDefault();
+        }
+        if ((event.code == 'F5')) {
+            event.preventDefault();
+        }
+        if ((event.code == 'Tab')) {
+            event.preventDefault();
+        }
+        if ((event.code == 'Enter')) {
+            event.preventDefault();
+        }
+        if ((event.code == 'NumpadEnter')) {
+            event.preventDefault();
+        }
+        if ((event.code == 'Space')) {
+            event.preventDefault();
+        }
+        if ((event.code == 'ArrowLeft' || event.code == 'ArrowRight') && (event.code == 'AltLeft' || event.code == 'altRight' || event.altKey || event.metaKey)) {
+            event.preventDefault();
+        }
+    });
+
+    function ShowHistory(offset=0) {
+
+        var a1 = {{ myChoiceHistory|json }}.split(",");
+        var r1 = a1.map(function (x) {
+            return parseInt(x);
+        });
+        r1.splice(0, 1);
+
+
+        var a2 = {{ otherChoiceHistory|json }}.split(",");
+        var r2 = a2.map(function (x) {
+            return parseInt(x);
+        });
+        r2.splice(0, 1);
+
+        var b1 = {{ myPayoffHistory|json }}.split(",");
+        var p1 = b1.map(function (x) {
+            return parseInt(x);
+        });
+        p1.splice(0, 1);
+
+
+        var b2 = {{ otherPayoffHistory|json }}.split(",");
+        var p2 = b2.map(function (x) {
+            return parseInt(x);
+        });
+        p2.splice(0, 1);
+
+
+        var c3 = {{ rollHistory|json }}.split(",");
+        var x3 = c3.map(function (x) {
+            return parseInt(x);
+        });
+        x3.splice(0, 1);
+
+
+        MyVariables.period = r2.length;
+        console.log(r2.length);
+        console.log("--->",r1, r2, MyVariables, p1, p2,  x3);
+
+        var myChoices = r1;
+        var otherChoices = r2;
+        for (var p = 0; p < MyVariables.period; p++) {
+            showOneHistoryPeriod(p, r1[p], r2[p], p1[p], p2[p], x3[p], MyVariables.period-offset);
+        }
+
+        showScroll();
+    };
+
+    function ShowCurrentPeriodEmpty() {
+            var p=MyVariables.period;
+            var myChoice = parseInt({{ myChoice|json }});
+
+            var options = ['1','2'];
+            var colOptions = ['var(--D-color)', 'var(--C-color)','var(--R-color)', 'var(--G-color)','var(--B-color)', 'var(--N-color)'];
+
+            var entries = ['period','myChoice'];
+            var values = [(p+1).toFixed(0),'?'];
+            var colors = ['white', 'white'];
+            var colorsT = ['black', 'black'];
+
+
+            for (var i = 0; i < entries.length; i++) {
+                var per = document.createElement('div');
+                per.className = entries[i];
+                per.id = 'id_' + entries[i] + '_' + p.toFixed(0);
+                per.innerHTML = values[i];
+                per.style.backgroundColor = colors[i];
+                per.style.color = colorsT[i];
+                per.style.left = (50 * (0)).toFixed(0) + "px";
+                per.style.opacity = 1;
+                document.getElementById("id_innerbox").appendChild(per);
+            }
+    };
+
+    function ShowCurrentPeriod() {
+            var p=MyVariables.period;
+            var myChoice = parseInt({{ myChoice|json }});
+
+            var options = ['1','2'];
+            var colOptions = ['var(--D-color)', 'var(--C-color)','var(--R-color)', 'var(--G-color)','var(--B-color)', 'var(--N-color)'];
+
+            var entries = ['period','myChoice'];
+            var values = [(p+1).toFixed(0),options[myChoice]];
+            var colors = ['white', colOptions[myChoice], ];
+            var colorsT = ['black', 'black'];
+
+
+            for (var i = 0; i < entries.length; i++) {
+                var per = document.createElement('div');
+                per.className = entries[i];
+                per.id = 'id_' + entries[i] + '_' + p.toFixed(0);
+                per.innerHTML = values[i];
+                per.style.backgroundColor = colors[i];
+                per.style.color = colorsT[i];
+                per.style.left = (50 * (0)).toFixed(0) + "px";
+                per.style.opacity = 1;
+                document.getElementById("id_innerbox").appendChild(per);
+            }
+    };
+
+    function ShowOneEntry(period,entry,value,color,colorText){
+        var per = document.createElement('div');
+        per.className = entry;
+        per.id = 'id_' + entry + '_' + period.toFixed(0);
+        per.innerHTML = value;
+        per.style.backgroundColor = color;
+        per.style.color = colorText;
+        per.style.left = (50 * (period)).toFixed(0) + "px";
+        per.style.opacity = 1;
+        document.getElementById("id_innerbox").appendChild(per);
+    }
+
+    function showOneHistoryPeriod(p, myChoice, otherChoice, myPayoff, otherPayoff, diceRoll,totalPeriods) {
+        var options = ['1', '2'];
+        var colOptions = ['var(--D-color)', 'var(--C-color)','var(--R-color)', 'var(--G-color)','var(--B-color)', 'var(--N-color)'];
+
+
+        var entries = ['period', 'myChoice', 'otherChoice', 'myPayoff', 'otherPayoff', 'diceRoll'];
+        var values = [(p + 1).toFixed(0), options[myChoice], options[otherChoice], myPayoff, otherPayoff, diceRoll];
+        var colors = ['white', colOptions[myChoice], colOptions[otherChoice], 'white', 'white', "white"];
+        var colorsT = ['black', 'black', 'black', 'black', 'black',  'gray'];
+        if(diceRoll>={{ CutoffRoll|json }}) {
+            var colorsT = ['black', 'black', 'black', 'black', 'black', 'red'];
+        }
+
+        for (var i = 0; i < entries.length; i++) {
+            var per = document.createElement('div');
+            per.className = entries[i];
+            per.id = 'id_' + entries[i] + '_' + p.toFixed(0);
+            per.innerHTML = values[i];
+            per.style.backgroundColor = colors[i];
+            per.style.color = colorsT[i];
+            per.style.left = (50 * (totalPeriods-p)).toFixed(0) + "px";
+            per.style.opacity = 1;
+            document.getElementById("id_innerbox").appendChild(per);
+        }
+
+    };
+
+    function showScroll() {
+        if (MyVariables.period > 24) {
+            enableScroll("id_innerbox");
+            show("scrollLabel");
+        }
+    };
+
+    function answerTermination(percent) {
+
+        var terminationProb = Math.round(100*(12-{{ CutoffRoll|json }}+1)/12);
+
+        if(percent == terminationProb){
+            updateText('quizMessage','Correct.');
+            show('NextButton');
+        } else {
+
+            updateText('quizMessage','That is incorrect. Please try again. Hint: The match ends if the computer rolls a {{ CutoffRoll|json }} or greater.');
+
+            hide('NextButton');
+        }
+
+    };
+
+    function answerContinuation(percent) {
+
+        var continuationProb = Math.round(100*({{ CutoffRoll|json }}-1)/12);
+
+        if(percent == continuationProb){
+            updateText('quizMessage','Correct.');
+            show('NextButton');
+            var tempElem = document.getElementById('id_testingHistory');
+            tempElem.value = tempElem.value + "T,";
+        } else {
+
+            updateText('quizMessage','That is incorrect. Please try again. Hint: The match continues if the computer rolls a number less than {{ CutoffRoll|json }}.');
+
+            hide('NextButton');
+            var tempElem = document.getElementById('id_testingHistory');
+            tempElem.value = tempElem.value + "F,";
+        }
+
+    };
+
+<!--    function correctAnswer(value) {-->
+<!--        var tempElem = document.getElementById('id_testingHistory');-->
+<!--        tempElem.value = tempElem.value + "T,";-->
+
+<!--    };-->
+
+
+    function correctAnswer(text) {
+        updateText('quizMessage',text);
+        show('NextButton');
+        var tempElem = document.getElementById('id_testingHistory');
+        tempElem.value = tempElem.value + "T,";
+
+    };
+
+    function incorrectAnswer(text) {
+        updateText('quizMessage',text);
+        hide('NextButton');
+        var tempElem = document.getElementById('id_testingHistory');
+        tempElem.value = tempElem.value + "F,";
+    };
+
+    function showText(target, someText) {
+        var x = document.getElementById(target);
+        x.style.display = "block";
+        x.innerHTML = someText;
+    };
+
+    function updateText(target, someText) {
+        var x = document.getElementById(target);
+        x.innerHTML = someText;
+    };
+
+    function hide(target) {
+        var x = document.getElementById(target);
+        x.style.display = "none";
+    };
+
+    function disableButton(target) {
+        var x = document.getElementById(target);
+        x.style.borderColor = "gray";
+        x.style.backgroundColor = "gray";
+        x.style.pointerEvents = "none";
+    };
+
+    function enableButton(target) {
+        var x = document.getElementById(target);
+        x.style.borderColor = "#1e8f27";
+        x.style.backgroundColor = "#1e8f27";
+        x.style.pointerEvents = "all";
+    };
+
+    function disableScroll(target) {
+        var x = document.getElementById(target);
+        x.style.overflowX = 'hidden';
+    };
+
+    function enableScroll(target) {
+        var x = document.getElementById(target);
+        x.style.overflowX = 'scroll';
+        {#x.style.direction = 'rtl';#}
+    };
+
+    function show(target) {
+        var x = document.getElementById(target);
+        x.style.display = "block";
+    };
+
+    function showInline(target) {
+        var x = document.getElementById(target);
+        x.style.display = "inline-block";
+    };
+
+    function showFlex(target) {
+        var x = document.getElementById(target);
+        x.style.display = "flex";
+    };
+
+    function deleteElement(elementID) {
+        var element = document.getElementById(elementID);
+        element.parentNode.removeChild(element);
+    };
+
+</script>

@@ -1,0 +1,37 @@
+{% extends "App02_FinalScreen/myPage.html" %}
+{% load staticfiles otree %}
+
+
+{% block scripts %}
+
+    <!-- define a script -->
+    <script>
+
+
+
+
+    </script>
+
+{% endblock %}
+
+
+{% block title %}
+
+    Thank You for Participating!
+
+{% endblock %}
+
+{% block content %}
+
+    <br/>
+    <p style="text-align: center; top: 100px;">
+        Your total earnings, including the show-up fee, are ${{ earningsTotal|json }}.
+    </p>
+
+    <p style="text-align: center; padding-top: 100px;">
+        Please wait patiently until everyone else is done with the experiment.
+    </p>
+
+
+
+{% endblock %}
